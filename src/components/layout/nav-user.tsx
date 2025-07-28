@@ -24,6 +24,9 @@ import {
   useSidebar,
 } from '@/components/ui/sidebar'
 
+import { useAuthStore } from '@/stores/authStore'
+import {useRouter} from '@tanstack/react-router'
+
 export function NavUser({
   user,
 }: {
@@ -34,6 +37,8 @@ export function NavUser({
   }
 }) {
   const { isMobile } = useSidebar()
+  const {reset} = useAuthStore((state) => state.auth)
+  const router = useRouter()
 
   return (
     <SidebarMenu>
@@ -102,7 +107,10 @@ export function NavUser({
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={() => {
+              reset()
+              router.navigate({ to: '/sign-in' })}
+            }>
               <LogOut />
               Log out
             </DropdownMenuItem>

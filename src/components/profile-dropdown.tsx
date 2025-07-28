@@ -1,6 +1,8 @@
 import { Link } from '@tanstack/react-router'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
+import { useAuthStore } from '@/stores/authStore'
+import {useRouter} from '@tanstack/react-router'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,6 +15,8 @@ import {
 } from '@/components/ui/dropdown-menu'
 
 export function ProfileDropdown() {
+  const {reset} = useAuthStore((state) => state.auth)
+  const router = useRouter()
   return (
     <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild>
@@ -55,7 +59,10 @@ export function ProfileDropdown() {
           <DropdownMenuItem>New Team</DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
+        <DropdownMenuItem onClick={() => {
+              reset()
+              router.navigate({ to: '/sign-in' })}
+            }>
           Log out
           <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
         </DropdownMenuItem>
