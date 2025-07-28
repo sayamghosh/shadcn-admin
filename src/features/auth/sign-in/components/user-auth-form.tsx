@@ -2,10 +2,14 @@ import { HTMLAttributes, useState } from 'react'
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Link } from '@tanstack/react-router'
+import { Link,useRouter } from '@tanstack/react-router'
 import { IconBrandFacebook, IconBrandGithub } from '@tabler/icons-react'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
+import { useEffect } from 'react'
+
+import { useAuthStore } from '@/stores/authStore'
+
 import {
   Form,
   FormControl,
@@ -26,11 +30,17 @@ const formSchema = z.object({
   password: z
     .string()
     .min(1, 'Please enter your password')
-    .min(7, 'Password must be at least 7 characters long'),
+    .min(6, 'Password must be at least 6 characters long'),
 })
 
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
+  
+  const { setAccessToken } = useAuthStore((state) => state.auth)
+  
   const [isLoading, setIsLoading] = useState(false)
+  
+  const router = useRouter()
+
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -40,10 +50,29 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
     },
   })
 
-  function onSubmit(data: z.infer<typeof formSchema>) {
+  async function onSubmit(data: z.infer<typeof formSchema>) {
     setIsLoading(true)
     // eslint-disable-next-line no-console
     console.log(data)
+    try {
+       const res = await fetch('https://apidev.skilldrift.ai/api/admins/login',{
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+      })
+      const response = await res.json()
+      if(!response.error){
+        console.log("Login successful", response)
+        console.log("Token", response?.data?.token)
+        setAccessToken(response?.data?.token)
+        router.navigate({ to: '/' })
+      }
+
+    } catch (error) {
+      console.log("Error occured during login",error)
+    }
 
     setTimeout(() => {
       setIsLoading(false)
