@@ -62,7 +62,6 @@ export default function ProfileForm() {
     defaultValues,
     mode: 'onChange',
   })
-
   const { fields, append } = useFieldArray({
     name: 'urls',
     control: form.control,

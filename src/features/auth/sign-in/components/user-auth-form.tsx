@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { HTMLAttributes, useState } from 'react'
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
@@ -6,8 +7,6 @@ import { Link,useRouter } from '@tanstack/react-router'
 import { IconBrandFacebook, IconBrandGithub } from '@tabler/icons-react'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
-import { useEffect } from 'react'
-
 import { useAuthStore } from '@/stores/authStore'
 
 import {
@@ -52,7 +51,6 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 
   async function onSubmit(data: z.infer<typeof formSchema>) {
     setIsLoading(true)
-    // eslint-disable-next-line no-console
     console.log(data)
     try {
        const res = await fetch('https://apidev.skilldrift.ai/api/admins/login',{
