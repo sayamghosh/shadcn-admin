@@ -14,13 +14,22 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 
+
 interface DataTablePaginationProps<TData> {
   table: Table<TData>
+  hasNext?: boolean
+  fetchNextPage?: (n:number) => void
+  totalCount: number
+  page: number
+  changeLimit?: (newLimit: number) => void
 }
 
 export function DataTablePagination<TData>({
-  table,
+  table, hasNext, fetchNextPage,totalCount,page,changeLimit
 }: DataTablePaginationProps<TData>) {
+
+
+  const pages = totalCount/table.getState().pagination.pageSize
   return (
     <div
       className='flex items-center justify-between overflow-clip px-2'
@@ -37,6 +46,7 @@ export function DataTablePagination<TData>({
             value={`${table.getState().pagination.pageSize}`}
             onValueChange={(value) => {
               table.setPageSize(Number(value))
+              changeLimit?.(Number(value))
             }}
           >
             <SelectTrigger className='h-8 w-[70px]'>
@@ -52,24 +62,24 @@ export function DataTablePagination<TData>({
           </Select>
         </div>
         <div className='flex w-[100px] items-center justify-center text-sm font-medium'>
-          Page {table.getState().pagination.pageIndex + 1} of{' '}
-          {table.getPageCount()}
+          Page {page} of{' '}
+          {pages > 0 ? Math.ceil(pages) : 0}
         </div>
         <div className='flex items-center space-x-2'>
           <Button
             variant='outline'
             className='hidden h-8 w-8 p-0 lg:flex'
-            onClick={() => table.setPageIndex(0)}
-            disabled={!table.getCanPreviousPage()}
+            onClick={() => fetchNextPage?.(-2)}
+            disabled={page <= 2}
           >
-            <span className='sr-only'>Go to first page</span>
+            <span className='sr-only'>Jump 2 pages backward</span>
             <DoubleArrowLeftIcon className='h-4 w-4' />
           </Button>
           <Button
             variant='outline'
             className='h-8 w-8 p-0'
-            onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
+            onClick={() => fetchNextPage?.(-1)}
+            disabled={page<=1}
           >
             <span className='sr-only'>Go to previous page</span>
             <ChevronLeftIcon className='h-4 w-4' />
@@ -77,8 +87,8 @@ export function DataTablePagination<TData>({
           <Button
             variant='outline'
             className='h-8 w-8 p-0'
-            onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
+            onClick={() => fetchNextPage?.(1)}
+            disabled={!hasNext}
           >
             <span className='sr-only'>Go to next page</span>
             <ChevronRightIcon className='h-4 w-4' />
@@ -86,10 +96,10 @@ export function DataTablePagination<TData>({
           <Button
             variant='outline'
             className='hidden h-8 w-8 p-0 lg:flex'
-            onClick={() => table.setPageIndex(table.getPageCount() - 1)}
-            disabled={!table.getCanNextPage()}
+            onClick={() => fetchNextPage?.(2)}
+            disabled={!((page + 2*table.getState().pagination.pageSize) < totalCount) }
           >
-            <span className='sr-only'>Go to last page</span>
+            <span className='sr-only'>Jump 2 pages forward</span>
             <DoubleArrowRightIcon className='h-4 w-4' />
           </Button>
         </div>

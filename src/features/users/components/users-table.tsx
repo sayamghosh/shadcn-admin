@@ -36,9 +36,22 @@ declare module '@tanstack/react-table' {
 interface DataTableProps {
   columns: ColumnDef<User>[]
   data: User[]
+  hasNext?: boolean
+  fetchNextPage?: (n:number) => void
+  changeLimit?: (newLimit: number) => void
+  totalCount:number
+  page: number
 }
 
-export function UsersTable({ columns, data }: DataTableProps) {
+export function UsersTable({
+  columns,
+  data,
+  hasNext,
+  totalCount,
+  page,
+  changeLimit,
+  fetchNextPage,
+}: DataTableProps) {
   const [rowSelection, setRowSelection] = useState({})
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
@@ -127,7 +140,14 @@ export function UsersTable({ columns, data }: DataTableProps) {
           </TableBody>
         </Table>
       </div>
-      <DataTablePagination table={table} />
+      <DataTablePagination
+        table={table}
+        hasNext={hasNext}
+        fetchNextPage={fetchNextPage}
+        totalCount={totalCount}
+        page={page}
+        changeLimit={changeLimit}
+      />
     </div>
   )
 }

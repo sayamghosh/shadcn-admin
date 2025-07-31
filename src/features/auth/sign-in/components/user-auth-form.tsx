@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { HTMLAttributes, useState } from 'react'
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
@@ -8,6 +7,7 @@ import { IconBrandFacebook, IconBrandGithub } from '@tabler/icons-react'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import { useAuthStore } from '@/stores/authStore'
+import { BASE_URL } from '@/lib/urls'
 
 import {
   Form,
@@ -19,6 +19,7 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { PasswordInput } from '@/components/password-input'
+import { toast } from 'sonner'
 
 type UserAuthFormProps = HTMLAttributes<HTMLFormElement>
 
@@ -51,9 +52,8 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 
   async function onSubmit(data: z.infer<typeof formSchema>) {
     setIsLoading(true)
-    console.log(data)
     try {
-       const res = await fetch('https://apidev.skilldrift.ai/api/admins/login',{
+       const res = await fetch(`${BASE_URL}/api/admins/login`,{
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -61,14 +61,16 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
         body: JSON.stringify(data)
       })
       const response = await res.json()
-      if(!response.error){
-        console.log("Login successful", response)
-        console.log("Token", response?.data?.token)
+      if(response.status){
         setAccessToken(response?.data?.token)
+        toast.success('Login successful',{duration: 2000})
         router.navigate({ to: '/' })
       }
-
+      else if(response.error){
+        toast.error(response.name,{ duration: 3000 })
+      }
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.log("Error occured during login",error)
     }
 

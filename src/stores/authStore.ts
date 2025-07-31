@@ -1,3 +1,4 @@
+import { BASE_URL } from '@/lib/urls'
 import Cookies from 'js-cookie'
 import { create } from 'zustand'
 
@@ -19,6 +20,21 @@ interface AuthState {
     resetAccessToken: () => void
     reset: () => void
   }
+}
+
+export async function logout() {
+  await fetch(`${BASE_URL}/api/admins/logout`,{
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${Cookies.get(ACCESS_TOKEN)}`,
+    },
+  }).catch((error) => {
+    // eslint-disable-next-line no-console
+    console.error('Logout failed:', error)
+  })
+  Cookies.remove(ACCESS_TOKEN)
+  window.location.href = '/sign-in'
 }
 
 export const useAuthStore = create<AuthState>()((set) => {
