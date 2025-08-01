@@ -25,6 +25,7 @@ import {
 import { User } from '../data/schema'
 import { DataTablePagination } from './data-table-pagination'
 import { DataTableToolbar } from './data-table-toolbar'
+import { Shimmer } from '@/components/ui/shimmer'
 
 declare module '@tanstack/react-table' {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -41,6 +42,7 @@ interface DataTableProps {
   changeLimit?: (newLimit: number) => void
   totalCount:number
   page: number
+  loading?: boolean
 }
 
 export function UsersTable({
@@ -51,6 +53,7 @@ export function UsersTable({
   page,
   changeLimit,
   fetchNextPage,
+  loading = false,
 }: DataTableProps) {
   const [rowSelection, setRowSelection] = useState({})
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
@@ -107,7 +110,28 @@ export function UsersTable({
             ))}
           </TableHeader>
           <TableBody>
-            {table.getRowModel().rows?.length ? (
+            {loading ? (
+              // Show shimmer rows during loading
+              Array.from({ length: 5 }).map((_, index) => (
+                <TableRow key={`shimmer-${index}`}>
+                  {columns.map((_, colIndex) => (
+                    <TableCell key={colIndex} className="p-4">
+                      <Shimmer 
+                        // height={colIndex === 0 ? "h-8" : "h-4"} 
+                        width={
+                          colIndex === 0 ? "w-32" : // Checkbox column
+                          colIndex === 1 ? "w-32" : // Name column
+                          colIndex === 2 ? "w-40" : // Email column
+                          colIndex === 3 ? "w-20" : // Status column
+                          colIndex === 4 ? "w-24" : // Role column
+                          "w-16" // Actions column
+                        }
+                      />
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))
+            ) : table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}

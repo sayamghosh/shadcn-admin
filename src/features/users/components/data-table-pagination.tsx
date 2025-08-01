@@ -97,7 +97,7 @@ export function DataTablePagination<TData>({
             variant='outline'
             className='hidden h-8 w-8 p-0 lg:flex'
             onClick={() => fetchNextPage?.(2)}
-            disabled={!((page + 2*table.getState().pagination.pageSize) < totalCount) }
+            disabled={!((pages-page)>1) }
           >
             <span className='sr-only'>Jump 2 pages forward</span>
             <DoubleArrowRightIcon className='h-4 w-4' />

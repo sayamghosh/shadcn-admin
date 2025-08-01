@@ -25,8 +25,10 @@ export default function Users() {
   const [limit, setLimit] = useState(10)
   const [hasNext, setHasNext] = useState(false)
   const [totalCount, setTotalCount] = useState(0)
+  const [loading, setLoading] = useState(false)
 
   async function fetchUsers() {
+    setLoading(true)
     try {
       const res = await fetch(
         `${BASE_URL}/api/users?page=${page}&limit=${limit}&sortBy=createdAt&sortOrder=-1`,
@@ -44,6 +46,8 @@ export default function Users() {
     } catch (error) {
       // eslint-disable-next-line no-console
       console.log('Error fetching users:', error)
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -91,6 +95,7 @@ export default function Users() {
             totalCount={totalCount}
             page={page}
             changeLimit={changeLimit}
+            loading={loading}
           />
         </div>
       </Main>
