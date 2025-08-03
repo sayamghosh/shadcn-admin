@@ -40,6 +40,7 @@ import { Route as AuthenticatedSettingsSecurityRouteImport } from './routes/_aut
 import { Route as AuthenticatedSettingsNotificationsRouteImport } from './routes/_authenticated/settings/notifications'
 import { Route as AuthenticatedSettingsDisplayRouteImport } from './routes/_authenticated/settings/display'
 import { Route as AuthenticatedSettingsAppearanceRouteImport } from './routes/_authenticated/settings/appearance'
+import { Route as AuthenticatedPlansCreateRouteImport } from './routes/_authenticated/plans/create'
 import { Route as AuthenticatedSettingsAccountIndexRouteImport } from './routes/_authenticated/settings/account/index'
 
 const ClerkRouteRoute = ClerkRouteRouteImport.update({
@@ -202,6 +203,12 @@ const AuthenticatedSettingsAppearanceRoute =
     path: '/appearance',
     getParentRoute: () => AuthenticatedSettingsRouteRoute,
   } as any)
+const AuthenticatedPlansCreateRoute =
+  AuthenticatedPlansCreateRouteImport.update({
+    id: '/create',
+    path: '/create',
+    getParentRoute: () => AuthenticatedPlansRouteRoute,
+  } as any)
 const AuthenticatedSettingsAccountIndexRoute =
   AuthenticatedSettingsAccountIndexRouteImport.update({
     id: '/account/',
@@ -225,6 +232,7 @@ export interface FileRoutesByFullPath {
   '/500': typeof errors500Route
   '/503': typeof errors503Route
   '/': typeof AuthenticatedIndexRoute
+  '/plans/create': typeof AuthenticatedPlansCreateRoute
   '/settings/appearance': typeof AuthenticatedSettingsAppearanceRoute
   '/settings/display': typeof AuthenticatedSettingsDisplayRoute
   '/settings/notifications': typeof AuthenticatedSettingsNotificationsRoute
@@ -254,6 +262,7 @@ export interface FileRoutesByTo {
   '/500': typeof errors500Route
   '/503': typeof errors503Route
   '/': typeof AuthenticatedIndexRoute
+  '/plans/create': typeof AuthenticatedPlansCreateRoute
   '/settings/appearance': typeof AuthenticatedSettingsAppearanceRoute
   '/settings/display': typeof AuthenticatedSettingsDisplayRoute
   '/settings/notifications': typeof AuthenticatedSettingsNotificationsRoute
@@ -289,6 +298,7 @@ export interface FileRoutesById {
   '/(errors)/500': typeof errors500Route
   '/(errors)/503': typeof errors503Route
   '/_authenticated/': typeof AuthenticatedIndexRoute
+  '/_authenticated/plans/create': typeof AuthenticatedPlansCreateRoute
   '/_authenticated/settings/appearance': typeof AuthenticatedSettingsAppearanceRoute
   '/_authenticated/settings/display': typeof AuthenticatedSettingsDisplayRoute
   '/_authenticated/settings/notifications': typeof AuthenticatedSettingsNotificationsRoute
@@ -323,6 +333,7 @@ export interface FileRouteTypes {
     | '/500'
     | '/503'
     | '/'
+    | '/plans/create'
     | '/settings/appearance'
     | '/settings/display'
     | '/settings/notifications'
@@ -352,6 +363,7 @@ export interface FileRouteTypes {
     | '/500'
     | '/503'
     | '/'
+    | '/plans/create'
     | '/settings/appearance'
     | '/settings/display'
     | '/settings/notifications'
@@ -386,6 +398,7 @@ export interface FileRouteTypes {
     | '/(errors)/500'
     | '/(errors)/503'
     | '/_authenticated/'
+    | '/_authenticated/plans/create'
     | '/_authenticated/settings/appearance'
     | '/_authenticated/settings/display'
     | '/_authenticated/settings/notifications'
@@ -637,6 +650,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedSettingsAppearanceRouteImport
       parentRoute: typeof AuthenticatedSettingsRouteRoute
     }
+    '/_authenticated/plans/create': {
+      id: '/_authenticated/plans/create'
+      path: '/create'
+      fullPath: '/plans/create'
+      preLoaderRoute: typeof AuthenticatedPlansCreateRouteImport
+      parentRoute: typeof AuthenticatedPlansRouteRoute
+    }
     '/_authenticated/settings/account/': {
       id: '/_authenticated/settings/account/'
       path: '/account'
@@ -648,11 +668,13 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedPlansRouteRouteChildren {
+  AuthenticatedPlansCreateRoute: typeof AuthenticatedPlansCreateRoute
   AuthenticatedPlansIndexRoute: typeof AuthenticatedPlansIndexRoute
 }
 
 const AuthenticatedPlansRouteRouteChildren: AuthenticatedPlansRouteRouteChildren =
   {
+    AuthenticatedPlansCreateRoute: AuthenticatedPlansCreateRoute,
     AuthenticatedPlansIndexRoute: AuthenticatedPlansIndexRoute,
   }
 
