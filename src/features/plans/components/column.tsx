@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { ColumnDef } from "@tanstack/react-table"
 import { ArrowUpDown, MoreHorizontal } from "lucide-react"
 
@@ -101,10 +101,19 @@ export const columns: ColumnDef<Plan>[] = [
     },
   },
   {
+    accessorKey: "points",
+    header: () => <div className="text-right">Points</div>,
+    cell: ({ row }) => {
+      
+
+      return <div className="text-right font-medium">{row.getValue('points')}</div>
+    },
+  },
+  {
     id: "actions",
     enableHiding: false,
     cell: ({ row }) => {
-      const Plan = row.original
+      const plan = row.original
 
       return (
         <DropdownMenu>
@@ -117,13 +126,13 @@ export const columns: ColumnDef<Plan>[] = [
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(Plan._id)}
+              onClick={() => {
+                // This will be handled by the parent component
+                window.dispatchEvent(new CustomEvent('editPlan', { detail: plan }))
+              }}
             >
-              Copy payment ID
+              Edit Plan
             </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem>View payment details</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       )
