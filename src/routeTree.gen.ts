@@ -40,6 +40,7 @@ import { Route as AuthenticatedSettingsSecurityRouteImport } from './routes/_aut
 import { Route as AuthenticatedSettingsNotificationsRouteImport } from './routes/_authenticated/settings/notifications'
 import { Route as AuthenticatedSettingsDisplayRouteImport } from './routes/_authenticated/settings/display'
 import { Route as AuthenticatedSettingsAppearanceRouteImport } from './routes/_authenticated/settings/appearance'
+import { Route as AuthenticatedPlansModuleCostRouteImport } from './routes/_authenticated/plans/module-cost'
 import { Route as AuthenticatedPlansForceRechargeRouteImport } from './routes/_authenticated/plans/force-recharge'
 import { Route as AuthenticatedPlansCreateRouteImport } from './routes/_authenticated/plans/create'
 import { Route as AuthenticatedSettingsAccountIndexRouteImport } from './routes/_authenticated/settings/account/index'
@@ -204,6 +205,12 @@ const AuthenticatedSettingsAppearanceRoute =
     path: '/appearance',
     getParentRoute: () => AuthenticatedSettingsRouteRoute,
   } as any)
+const AuthenticatedPlansModuleCostRoute =
+  AuthenticatedPlansModuleCostRouteImport.update({
+    id: '/module-cost',
+    path: '/module-cost',
+    getParentRoute: () => AuthenticatedPlansRouteRoute,
+  } as any)
 const AuthenticatedPlansForceRechargeRoute =
   AuthenticatedPlansForceRechargeRouteImport.update({
     id: '/force-recharge',
@@ -241,6 +248,7 @@ export interface FileRoutesByFullPath {
   '/': typeof AuthenticatedIndexRoute
   '/plans/create': typeof AuthenticatedPlansCreateRoute
   '/plans/force-recharge': typeof AuthenticatedPlansForceRechargeRoute
+  '/plans/module-cost': typeof AuthenticatedPlansModuleCostRoute
   '/settings/appearance': typeof AuthenticatedSettingsAppearanceRoute
   '/settings/display': typeof AuthenticatedSettingsDisplayRoute
   '/settings/notifications': typeof AuthenticatedSettingsNotificationsRoute
@@ -272,6 +280,7 @@ export interface FileRoutesByTo {
   '/': typeof AuthenticatedIndexRoute
   '/plans/create': typeof AuthenticatedPlansCreateRoute
   '/plans/force-recharge': typeof AuthenticatedPlansForceRechargeRoute
+  '/plans/module-cost': typeof AuthenticatedPlansModuleCostRoute
   '/settings/appearance': typeof AuthenticatedSettingsAppearanceRoute
   '/settings/display': typeof AuthenticatedSettingsDisplayRoute
   '/settings/notifications': typeof AuthenticatedSettingsNotificationsRoute
@@ -309,6 +318,7 @@ export interface FileRoutesById {
   '/_authenticated/': typeof AuthenticatedIndexRoute
   '/_authenticated/plans/create': typeof AuthenticatedPlansCreateRoute
   '/_authenticated/plans/force-recharge': typeof AuthenticatedPlansForceRechargeRoute
+  '/_authenticated/plans/module-cost': typeof AuthenticatedPlansModuleCostRoute
   '/_authenticated/settings/appearance': typeof AuthenticatedSettingsAppearanceRoute
   '/_authenticated/settings/display': typeof AuthenticatedSettingsDisplayRoute
   '/_authenticated/settings/notifications': typeof AuthenticatedSettingsNotificationsRoute
@@ -345,6 +355,7 @@ export interface FileRouteTypes {
     | '/'
     | '/plans/create'
     | '/plans/force-recharge'
+    | '/plans/module-cost'
     | '/settings/appearance'
     | '/settings/display'
     | '/settings/notifications'
@@ -376,6 +387,7 @@ export interface FileRouteTypes {
     | '/'
     | '/plans/create'
     | '/plans/force-recharge'
+    | '/plans/module-cost'
     | '/settings/appearance'
     | '/settings/display'
     | '/settings/notifications'
@@ -412,6 +424,7 @@ export interface FileRouteTypes {
     | '/_authenticated/'
     | '/_authenticated/plans/create'
     | '/_authenticated/plans/force-recharge'
+    | '/_authenticated/plans/module-cost'
     | '/_authenticated/settings/appearance'
     | '/_authenticated/settings/display'
     | '/_authenticated/settings/notifications'
@@ -663,6 +676,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedSettingsAppearanceRouteImport
       parentRoute: typeof AuthenticatedSettingsRouteRoute
     }
+    '/_authenticated/plans/module-cost': {
+      id: '/_authenticated/plans/module-cost'
+      path: '/module-cost'
+      fullPath: '/plans/module-cost'
+      preLoaderRoute: typeof AuthenticatedPlansModuleCostRouteImport
+      parentRoute: typeof AuthenticatedPlansRouteRoute
+    }
     '/_authenticated/plans/force-recharge': {
       id: '/_authenticated/plans/force-recharge'
       path: '/force-recharge'
@@ -690,6 +710,7 @@ declare module '@tanstack/react-router' {
 interface AuthenticatedPlansRouteRouteChildren {
   AuthenticatedPlansCreateRoute: typeof AuthenticatedPlansCreateRoute
   AuthenticatedPlansForceRechargeRoute: typeof AuthenticatedPlansForceRechargeRoute
+  AuthenticatedPlansModuleCostRoute: typeof AuthenticatedPlansModuleCostRoute
   AuthenticatedPlansIndexRoute: typeof AuthenticatedPlansIndexRoute
 }
 
@@ -697,6 +718,7 @@ const AuthenticatedPlansRouteRouteChildren: AuthenticatedPlansRouteRouteChildren
   {
     AuthenticatedPlansCreateRoute: AuthenticatedPlansCreateRoute,
     AuthenticatedPlansForceRechargeRoute: AuthenticatedPlansForceRechargeRoute,
+    AuthenticatedPlansModuleCostRoute: AuthenticatedPlansModuleCostRoute,
     AuthenticatedPlansIndexRoute: AuthenticatedPlansIndexRoute,
   }
 

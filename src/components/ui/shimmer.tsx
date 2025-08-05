@@ -38,8 +38,8 @@ export function TableShimmer({ rows = 5, columns = 6 }: TableShimmerProps) {
                   colIndex === 1 ? "w-32" : // Name column
                   colIndex === 2 ? "w-40" : // Email column
                   colIndex === 3 ? "w-20" : // Status column
-                  colIndex === 4 ? "w-24" : // Role column
-                  "w-16" // Actions column
+                  colIndex === 4 ? "w-20" : // Role column
+                  "w-10" // Actions column
                 }
               />
             </td>

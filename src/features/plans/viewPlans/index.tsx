@@ -29,8 +29,10 @@ export default function ViewPlans() {
   const [plans, setPlans] = useState<Plan[]>([])
   const [editModalOpen, setEditModalOpen] = useState(false)
   const [selectedPlan, setSelectedPlan] = useState<Plan | null>(null)
+  const [isLoading, setIsLoading] = useState(false)
 
   async function fetchData() {
+    setIsLoading(true)
     try {
       const res = await fetch(
         `${BASE_URL}/api/payments/get-subscription-plans`,
@@ -46,6 +48,8 @@ export default function ViewPlans() {
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error('Error fetching subscription plans:', error)
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -69,7 +73,7 @@ export default function ViewPlans() {
         desc='View and manage your subscription plans.'
         fullWidth={true}
       >
-        <DataTable data={plans} />
+        <DataTable data={plans} loading={isLoading} />
       </ContentSection>
       
       <EditPlanModal

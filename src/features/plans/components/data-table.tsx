@@ -10,7 +10,7 @@ import {
   useReactTable,
   VisibilityState,
 } from "@tanstack/react-table"
-import { ChevronDown } from "lucide-react"
+import { ChevronDown, Loader2 } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -19,6 +19,7 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { TableShimmer } from "@/components/ui/shimmer"
 import { Input } from "@/components/ui/input"
 import {
   Table,
@@ -45,7 +46,12 @@ type Plan = {
 };
 
 
-export default function DataTable({data}: { data: Plan[] }) {
+interface DataTableProps {
+  data: Plan[]
+  loading?: boolean
+}
+
+export default function DataTable({ data, loading = false }: DataTableProps) {
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -83,10 +89,12 @@ export default function DataTable({data}: { data: Plan[] }) {
             table.getColumn("email")?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
+          disabled={loading}
         />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="ml-auto">
+            <Button variant="outline" className="ml-auto" disabled={loading}>
+              {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
               Columns <ChevronDown />
             </Button>
           </DropdownMenuTrigger>
@@ -132,7 +140,10 @@ export default function DataTable({data}: { data: Plan[] }) {
             ))}
           </TableHeader>
           <TableBody>
-            {table.getRowModel().rows?.length ? (
+            {loading ? (
+              // Show shimmer effect during loading
+              <TableShimmer rows={5} columns={columns.length} />
+            ) : table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
@@ -171,16 +182,18 @@ export default function DataTable({data}: { data: Plan[] }) {
             variant="outline"
             size="sm"
             onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
+            disabled={!table.getCanPreviousPage() || loading}
           >
+            {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
             Previous
           </Button>
           <Button
             variant="outline"
             size="sm"
             onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
+            disabled={!table.getCanNextPage() || loading}
           >
+            {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
             Next
           </Button>
         </div>
