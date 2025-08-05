@@ -4,17 +4,15 @@ import { create } from 'zustand'
 
 const ACCESS_TOKEN = 'admin-token'
 
-interface AuthUser {
-  accountNo: string
+interface User {
+  name: string
   email: string
-  role: string[]
-  exp: number
 }
 
 interface AuthState {
   auth: {
-    user: AuthUser | null
-    setUser: (user: AuthUser | null) => void
+    user: User | null
+    setUser: (user: User) => void
     accessToken: string
     setAccessToken: (accessToken: string) => void
     resetAccessToken: () => void

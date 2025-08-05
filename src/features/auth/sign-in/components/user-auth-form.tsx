@@ -35,7 +35,7 @@ const formSchema = z.object({
 
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   
-  const { setAccessToken } = useAuthStore((state) => state.auth)
+  const { setAccessToken,setUser } = useAuthStore((state) => state.auth)
   
   const [isLoading, setIsLoading] = useState(false)
   
@@ -63,6 +63,10 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
       const response = await res.json()
       if(response.status){
         setAccessToken(response?.data?.token)
+        setUser({
+          name: response?.data?.admin?.name,
+          email: response?.data?.admin?.email
+        })
         toast.success('Login successful',{duration: 2000})
         router.navigate({ to: '/' })
       }
