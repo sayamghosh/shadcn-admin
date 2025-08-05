@@ -5,7 +5,7 @@ import { ProfileDropdown } from '@/components/profile-dropdown'
 import { Search } from '@/components/search'
 import { ThemeSwitch } from '@/components/theme-switch'
 import SidebarNav from '../settings/components/sidebar-nav'
-import { IconTool, IconUser } from '@tabler/icons-react'
+import { IconTool, IconUser, IconWallet } from '@tabler/icons-react'
 import { Outlet } from '@tanstack/react-router'
 
 
@@ -53,4 +53,14 @@ const sidebarNavItems = [
     icon: <IconTool size={18} />,
     href: '/plans/create',
   },
+  {
+    title:'Module Cost',
+    icon: <IconTool size={18} />,
+    href: '/plans/module-cost',
+  },
+  {
+    title:'Force recharge',
+    icon: <IconWallet size={18} />,
+    href: '/plans/force-recharge',
+  }
 ]
