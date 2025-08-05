@@ -3,6 +3,7 @@ import Cookies from 'js-cookie'
 import { create } from 'zustand'
 
 const ACCESS_TOKEN = 'admin-token'
+const USER_DATA = 'admin-user' // Add user data cookie key
 
 interface User {
   name: string
@@ -32,17 +33,26 @@ export async function logout() {
     console.error('Logout failed:', error)
   })
   Cookies.remove(ACCESS_TOKEN)
+  Cookies.remove(USER_DATA) // Remove user data cookie
   window.location.href = '/sign-in'
 }
 
 export const useAuthStore = create<AuthState>()((set) => {
   const cookieState = Cookies.get(ACCESS_TOKEN)
+  const userCookie = Cookies.get(USER_DATA)
+  
   const initToken = cookieState || ''
+  const initUser = userCookie ? JSON.parse(userCookie) : null // Parse user data from cookie
+  
   return {
     auth: {
-      user: null,
+      user: initUser,
       setUser: (user) =>
-        set((state) => ({ ...state, auth: { ...state.auth, user } })),
+        set((state) => {
+          // Store user data in cookie
+          Cookies.set(USER_DATA, JSON.stringify(user))
+          return { ...state, auth: { ...state.auth, user } }
+        }),
       accessToken: initToken,
       setAccessToken: (accessToken) =>
         set((state) => {
@@ -57,6 +67,7 @@ export const useAuthStore = create<AuthState>()((set) => {
       reset: () =>
         set((state) => {
           Cookies.remove(ACCESS_TOKEN)
+          Cookies.remove(USER_DATA) // Remove user data cookie
           return {
             ...state,
             auth: { ...state.auth, user: null, accessToken: '' },

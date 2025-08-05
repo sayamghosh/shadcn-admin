@@ -79,8 +79,25 @@ export const sidebarData: SidebarData = {
         },
         {
           title: 'Plans',
-          url: '/plans',
           icon: IconMoneybag,
+          items:[
+            {
+              title: 'View Plans',
+              url: '/plans',
+            },
+            {
+              title: 'Create Plan',
+              url: '/plans/create',
+            },
+            {
+              title: 'Module Cost',
+              url: '/plans/module-cost',
+            },
+            {
+              title: 'Force Recharge',
+              url: '/plans/force-recharge',
+            },
+          ]
         },
         {
           title: 'Secured by Clerk',

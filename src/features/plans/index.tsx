@@ -4,8 +4,6 @@ import { Main } from '@/components/layout/main'
 import { ProfileDropdown } from '@/components/profile-dropdown'
 import { Search } from '@/components/search'
 import { ThemeSwitch } from '@/components/theme-switch'
-import SidebarNav from '../settings/components/sidebar-nav'
-import { IconTool, IconUser, IconWallet,IconCash } from '@tabler/icons-react'
 import { Outlet } from '@tanstack/react-router'
 
 
@@ -30,9 +28,6 @@ export default function Plans() {
         </div>
         <Separator className='mt-4 mb-2 lg:mt-4' />
         <div className='flex flex-1 flex-col space-y-2 overflow-hidden md:space-y-2 lg:flex-row lg:space-y-0 lg:space-x-12'>
-          <aside className='top-0 lg:sticky lg:w-1/5'>
-            <SidebarNav items={sidebarNavItems} />
-          </aside>
           <div className='flex w-full overflow-y-hidden p-1'>
             <Outlet />
           </div>
@@ -42,25 +37,4 @@ export default function Plans() {
   )
 }
 
-const sidebarNavItems = [
-  {
-    title: 'Plans',
-    icon: <IconUser size={18} />,
-    href: '/plans',
-  },
-  {
-    title: 'Create Plans',
-    icon: <IconTool size={18} />,
-    href: '/plans/create',
-  },
-  {
-    title:'Module Cost',
-    icon: <IconCash size={18} />,
-    href: '/plans/module-cost',
-  },
-  {
-    title:'Force recharge',
-    icon: <IconWallet size={18} />,
-    href: '/plans/force-recharge',
-  }
-]
+
