@@ -5,6 +5,7 @@ import { Edit } from "lucide-react"
 import { useAuthStore } from '@/stores/authStore'
 import { BASE_URL } from '@/lib/urls'
 import EditModelCostModal from './components/editModelCostModal'
+import { Shimmer } from '@/components/ui/shimmer'
 
 interface ModelCostData {
   _id: string
@@ -27,8 +28,10 @@ export default function ModelCost() {
     const { accessToken } = useAuthStore((state) => state.auth)
     const [data, setdata] = useState<ModelCostData | null>(null) // Add null type
     const [isOpen, setIsOpen] = useState(false)
+    const [isLoading, setIsLoading] = useState(true)
 
     async function fetchData() {
+        setIsLoading(true)
         try {
             const res = await fetch(`${BASE_URL}/api/payments/get-module-costs`, {
                 method: 'GET',
@@ -44,6 +47,8 @@ export default function ModelCost() {
         } catch (error) {
             // eslint-disable-next-line no-console
             console.error('Error fetching model costs:', error)
+        } finally {
+            setIsLoading(false)
         }
     }
 
@@ -53,14 +58,28 @@ export default function ModelCost() {
     }, [])
 
     // Add loading state check
-    if (!data) {
+    if (isLoading) {
         return (
-            <Card className="w-full mx-auto">
-                <CardHeader>
-                    <CardTitle>Loading...</CardTitle>
+            <Card className="w-full mx-auto h-fit">
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 w-full">
+                    <div className="flex-1">
+                        <Shimmer width="w-48" height="h-7" className="mb-2" />
+                        <Shimmer width="w-64" height="h-4" />
+                    </div>
+                    <Shimmer width="w-32" height="h-9" />
                 </CardHeader>
                 <CardContent>
-                    <p>Fetching model costs...</p>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        {Array.from({ length: 9 }).map((_, index) => (
+                            <div key={index} className="flex justify-between items-center p-2 rounded-lg border">
+                                <Shimmer width="w-32" height="h-4" />
+                                <Shimmer width="w-16" height="h-4" />
+                            </div>
+                        ))}
+                    </div>
+                    <div className="mt-4">
+                        <Shimmer width="w-40" height="h-4" />
+                    </div>
                 </CardContent>
             </Card>
         )
@@ -82,7 +101,7 @@ export default function ModelCost() {
             </CardHeader>
             <CardContent>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {Object.entries(data)
+                    {data && Object.entries(data)
                         .filter(([key]) => !['_id', 'createdBy', 'updatedBy', 'createdAt', 'updatedAt'].includes(key))
                         .map(([key, value]) => (
                             <div key={key} className="flex justify-between items-center p-2 rounded-lg border">
@@ -90,13 +109,13 @@ export default function ModelCost() {
                                     {key.split(/(?=[A-Z])/).join(" ")}
                                 </span>
                                 <span className="text-muted-foreground font-mono">
-                                    {value} points
+                                    {String(value)} points
                                 </span>
                             </div>
                         ))}
                 </div>
                 <div className="mt-4 text-sm text-muted-foreground">
-                    <p>Last updated: {new Date(data.updatedAt).toLocaleDateString()}</p>
+                    {data && <p>Last updated: {new Date(data.updatedAt).toLocaleDateString()}</p>}
                 </div>
             </CardContent>
         </Card>

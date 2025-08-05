@@ -32,9 +32,9 @@ export const sidebarData: SidebarData = {
   },
   teams: [
     {
-      name: 'Shadcn Admin',
+      name: 'Admin Pannel',
       logo: Command,
-      plan: 'Vite + ShadcnUI',
+      plan: 'Skill Drift',
     },
     {
       name: 'Acme Inc',
