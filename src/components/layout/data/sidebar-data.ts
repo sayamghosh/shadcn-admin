@@ -1,27 +1,19 @@
 import {
-  IconBarrierBlock,
-  IconBrowserCheck,
-  IconBug,
-  IconChecklist,
-  IconError404,
-  IconHelp,
   IconLayoutDashboard,
-  IconLock,
-  IconLockAccess,
-  IconMessages,
   IconNotification,
-  IconPackages,
   IconPalette,
-  IconServerOff,
   IconSettings,
   IconTool,
   IconUserCog,
-  IconUserOff,
   IconUsers,
   IconMoneybag,
+  IconCurrencyDollar,
+  IconCreditCard,
+  IconMoneybagPlus,
+  IconBrowserCheck,
+  IconLock
 } from '@tabler/icons-react'
-import { AudioWaveform, Command, GalleryVerticalEnd } from 'lucide-react'
-import { ClerkLogo } from '@/assets/clerk-logo'
+import { Command, } from 'lucide-react'
 import { type SidebarData } from '../types'
 
 export const sidebarData: SidebarData = {
@@ -36,16 +28,16 @@ export const sidebarData: SidebarData = {
       logo: Command,
       plan: 'Skill Drift',
     },
-    {
-      name: 'Acme Inc',
-      logo: GalleryVerticalEnd,
-      plan: 'Enterprise',
-    },
-    {
-      name: 'Acme Corp.',
-      logo: AudioWaveform,
-      plan: 'Startup',
-    },
+    // {
+    //   name: 'Acme Inc',
+    //   logo: GalleryVerticalEnd,
+    //   plan: 'Enterprise',
+    // },
+    // {
+    //   name: 'Acme Corp.',
+    //   logo: AudioWaveform,
+    //   plan: 'Startup',
+    // },
   ],
   navGroups: [
     {
@@ -56,22 +48,22 @@ export const sidebarData: SidebarData = {
           url: '/',
           icon: IconLayoutDashboard,
         },
-        {
-          title: 'Tasks',
-          url: '/tasks',
-          icon: IconChecklist,
-        },
-        {
-          title: 'Apps',
-          url: '/apps',
-          icon: IconPackages,
-        },
-        {
-          title: 'Chats',
-          url: '/chats',
-          badge: '3',
-          icon: IconMessages,
-        },
+        // {
+        //   title: 'Tasks',
+        //   url: '/tasks',
+        //   icon: IconChecklist,
+        // },
+        // {
+        //   title: 'Apps',
+        //   url: '/apps',
+        //   icon: IconPackages,
+        // },
+        // {
+        //   title: 'Chats',
+        //   url: '/chats',
+        //   badge: '3',
+        //   icon: IconMessages,
+        // },
         {
           title: 'Users',
           url: '/users',
@@ -84,103 +76,102 @@ export const sidebarData: SidebarData = {
             {
               title: 'View Plans',
               url: '/plans',
+              icon:IconCurrencyDollar,
             },
             {
               title: 'Create Plan',
               url: '/plans/create',
+              icon:IconMoneybagPlus
             },
             {
               title: 'Module Cost',
               url: '/plans/module-cost',
-            },
-            {
-              title: 'Force Recharge',
-              url: '/plans/force-recharge',
+              icon:IconCreditCard
             },
           ]
         },
-        {
-          title: 'Secured by Clerk',
-          icon: ClerkLogo,
-          items: [
-            {
-              title: 'Sign In',
-              url: '/clerk/sign-in',
-            },
-            {
-              title: 'Sign Up',
-              url: '/clerk/sign-up',
-            },
-            {
-              title: 'User Management',
-              url: '/clerk/user-management',
-            },
-          ],
-        },
+        // {
+        //   title: 'Secured by Clerk',
+        //   icon: ClerkLogo,
+        //   items: [
+        //     {
+        //       title: 'Sign In',
+        //       url: '/clerk/sign-in',
+        //     },
+        //     {
+        //       title: 'Sign Up',
+        //       url: '/clerk/sign-up',
+        //     },
+        //     {
+        //       title: 'User Management',
+        //       url: '/clerk/user-management',
+        //     },
+        //   ],
+        // },
       ],
     },
-    {
-      title: 'Pages',
-      items: [
-        {
-          title: 'Auth',
-          icon: IconLockAccess,
-          items: [
-            {
-              title: 'Sign In',
-              url: '/sign-in',
-            },
-            {
-              title: 'Sign In (2 Col)',
-              url: '/sign-in-2',
-            },
-            {
-              title: 'Sign Up',
-              url: '/sign-up',
-            },
-            {
-              title: 'Forgot Password',
-              url: '/forgot-password',
-            },
-            {
-              title: 'OTP',
-              url: '/otp',
-            },
-          ],
-        },
-        {
-          title: 'Errors',
-          icon: IconBug,
-          items: [
-            {
-              title: 'Unauthorized',
-              url: '/401',
-              icon: IconLock,
-            },
-            {
-              title: 'Forbidden',
-              url: '/403',
-              icon: IconUserOff,
-            },
-            {
-              title: 'Not Found',
-              url: '/404',
-              icon: IconError404,
-            },
-            {
-              title: 'Internal Server Error',
-              url: '/500',
-              icon: IconServerOff,
-            },
-            {
-              title: 'Maintenance Error',
-              url: '/503',
-              icon: IconBarrierBlock,
-            },
-          ],
-        },
-      ],
-    },
+    // {
+    //   title: 'Pages',
+    //   items: [
+    //     {
+    //       title: 'Auth',
+    //       icon: IconLockAccess,
+    //       items: [
+    //         {
+    //           title: 'Sign In',
+    //           url: '/sign-in',
+    //         },
+    //         {
+    //           title: 'Sign In (2 Col)',
+    //           url: '/sign-in-2',
+    //         },
+    //         {
+    //           title: 'Sign Up',
+    //           url: '/sign-up',
+    //         },
+    //         {
+    //           title: 'Forgot Password',
+    //           url: '/forgot-password',
+    //         },
+    //         {
+    //           title: 'OTP',
+    //           url: '/otp',
+    //         },
+    //       ],
+    //     },
+    //     {
+    //       title: 'Errors',
+    //       icon: IconBug,
+    //       items: [
+    //         {
+    //           title: 'Unauthorized',
+    //           url: '/401',
+    //           icon: IconLock,
+    //         },
+    //         {
+    //           title: 'Forbidden',
+    //           url: '/403',
+    //           icon: IconUserOff,
+    //         },
+    //         {
+    //           title: 'Not Found',
+    //           url: '/404',
+    //           icon: IconError404,
+    //         },
+    //         {
+    //           title: 'Internal Server Error',
+    //           url: '/500',
+    //           icon: IconServerOff,
+    //         },
+    //         {
+    //           title: 'Maintenance Error',
+    //           url: '/503',
+    //           icon: IconBarrierBlock,
+    //         },
+    //       ],
+    //     },
+    //   ],
+    // },
     {
       title: 'Other',
       items: [
@@ -213,13 +204,18 @@ export const sidebarData: SidebarData = {
               url: '/settings/display',
               icon: IconBrowserCheck,
             },
+            {
+              title: 'Security',
+              icon: IconLock ,
+              url: '/settings/security',
+            },
           ],
         },
-        {
-          title: 'Help Center',
-          url: '/help-center',
-          icon: IconHelp,
-        },
+        // {
+        //   title: 'Help Center',
+        //   url: '/help-center',
+        //   icon: IconHelp,
+        // },
       ],
     },
   ],
